@@ -26,36 +26,19 @@
       </p-table>
     </div>
     <div class="col-6">
-      <table class="table table-bordered">
-        <thead class="thead-light">
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">First</th>
-            <th scope="col">Last</th>
-            <th scope="col">Handle</th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Mark</td>
-            <td>Otto</td>
-            <td>@mdo</td>
-          </tr>
-          <tr>
-            <th scope="row">2</th>
-            <td>Jacob</td>
-            <td>Thornton</td>
-            <td>@fat</td>
-          </tr>
-          <tr>
-            <th scope="row">3</th>
-            <td>Larry</td>
-            <td>the Bird</td>
-            <td>@twitter</td>
-          </tr>
-        </tbody>
-      </table>
+      <h5>股票號碼</h5>
+      <input type="text" pInputText [(ngModel)]="companyId" />
+      <span class="p-ml-2">{{ companyId }}</span>
+
+      <h5>本益比</h5>
+      <span class="p-float-label">
+        <input id="float-input" type="text" pInputText [(ngModel)]="peRatio" />
+        <span class="p-ml-2">{{ peRatio }}</span>
+      </span>
+      <!-- <button pButton type="button" label="Click" (click)="handleClick($event)"></button> -->
+      <p-button label="Click" (onClick)="handleClick($event)"></p-button>
+      <h5>預估價值</h5>
+      <h5>{{predictValue}}</h5>
     </div>
   </div>
 </div>
