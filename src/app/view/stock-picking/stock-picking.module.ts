@@ -4,9 +4,10 @@ import { TargetPricingMainComponent } from './target-pricing-main/target-pricing
 import { SharedModule } from 'src/app/shared/shared.module';
 import { DataService } from 'src/app/services/data.service';
 import { StockPickingRoutingModule } from './stock-picking-routing.module';
+import { TargetPricingViewComponent } from './target-pricing-view/target-pricing-view.component';
 
 @NgModule({
-  declarations: [TargetPricingMainComponent],
+  declarations: [TargetPricingMainComponent, TargetPricingViewComponent],
   imports: [CommonModule, SharedModule, StockPickingRoutingModule],
   providers: [DataService],
 })

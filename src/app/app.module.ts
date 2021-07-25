@@ -15,7 +15,6 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { environment } from 'src/environments/environment';
 import { StockPickingModule } from './view/stock-picking/stock-picking.module';
-import { StockPickingRoutingModule } from './view/stock-picking/stock-picking-routing.module';
 
 const httpLoaderLeekArmy = (http: HttpClient) => {
   return new TranslateHttpLoader(http, `${environment.apiURL}`, '');
@@ -39,7 +38,6 @@ const httpLoaderLeekArmy = (http: HttpClient) => {
         deps: [HttpClient],
       },
     }),
-    StockPickingRoutingModule,
   ],
   providers: [DatePipe, DecimalPipe, PercentPipe],
   bootstrap: [AppComponent],
