@@ -19,16 +19,20 @@ export class DataService {
     };
     return this.http.post<MonthRevenue>(queryURL, query);
   }
-  getStockValuePredict(year: number, month: number,season: number, stockId: number, peRatio: number)
-  {
+  getStockValuePredict(
+    year: number,
+    month: number,
+    season: number,
+    stockId: number,
+    peRatio: number
+  ) {
     const queryURL = url + 'PredictValue';
-      const query = {
+    const query = {
       year: year,
       month: month,
       season: season,
       companyId: stockId,
       peRatio: peRatio,
-    
     };
     return this.http.post<ValuePredict>(queryURL, query);
   }
@@ -47,19 +51,27 @@ export class DataService {
 export interface MonthRevenue {}
 
 export interface ValuePredict {
-  companyId: string,
-  companyName: string,
-    year: number,
-  season:  number,
-   revenue :  number,
-   cost :  number,
-   operatingFee :  number,
-   nonOperatingProfit :  number,
-   totalProfitAfterTax :  number,
-   eps :  number,
-   predictSeasonRevenue :  number,
-   predictSeasonMarginProfit :  number,
-   predictTotalProfitAfterTax :  number,
-   predictYearEPS :  number,
-   predictStockValue :  number
+  companyId: string;
+  companyName: string;
+  year: number;
+  season: number;
+  revenue: number;
+  cost: number;
+  operatingFee: number;
+  nonOperatingProfit: number;
+  totalProfitAfterTax: number;
+  eps: number;
+  predictSeasonRevenue: number;
+  predictSeasonMarginProfit: number;
+  predictTotalProfitAfterTax: number;
+  predictYearEPS: number;
+  predictStockValue: number;
+}
+
+export interface TabItem {
+  name: string;
+  iconClass: string;
+  link?: string;
+  href?: string;
+  nested?: TabItem[];
 }

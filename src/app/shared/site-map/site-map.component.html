@@ -1,0 +1,120 @@
+<nav
+  *ngIf="navBar.isShowNavbar"
+  class="navbar navbar-expand-lg navbar-dark fixed-top"
+  id="mainNav"
+>
+  <a class="navbar-brand" routerLink="/main-page">
+    <div class="navbar-brand">
+      <i class="fas fa-hand-holding-usd"></i>
+    </div>
+  </a>
+  <button
+    class="navbar-toggler navbar-toggler-right"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarResponsive"
+    aria-controls="navbarResponsive"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarResponsive">
+    <ul class="navbar-nav">
+      <li
+        *ngFor="let item of tabs"
+        class="nav-item dropdown mr-2"
+        routerLinkActive="active"
+      >
+        <!-- 單層結構 -->
+        <ng-container *ngIf="!item.nested">
+          <a
+            *ngIf="!item.href"
+            class="nav-link"
+            [routerLink]="item.link"
+            routerLinkActive="active"
+          >
+            <i [attr.class]="item.iconClass"></i>
+            <span class="nav-link-text">{{ item.name }}</span>
+          </a>
+          <a
+            *ngIf="item.href"
+            class="nav-link"
+            target="_blank"
+            [href]="item.href"
+            >{{ item.name }}</a
+          >
+        </ng-container>
+        <!-- 雙層結構 -->
+        <ng-container *ngIf="item.nested && item.nested.length">
+          <a
+            class="nav-link dropdown-toggle"
+            routerLinkActive="active"
+            data-toggle="dropdown"
+          >
+            <i [attr.class]="item.iconClass"></i>
+            <span class="nav-link-text">{{ item.name }}</span>
+          </a>
+          <div *ngIf="item.nested" class="dropdown-menu">
+            <a
+              *ngFor="let nestedItem of item.nested"
+              class="dropdown-item"
+              routerLinkActive="active"
+              [routerLink]="nestedItem.link"
+            >
+              <i [attr.class]="nestedItem.iconClass"></i>
+              <span class="nav-link-text">{{ nestedItem.name }}</span>
+            </a>
+          </div>
+        </ng-container>
+      </li>
+    </ul>
+
+    <ul class="navbar-nav ml-auto">
+      <li class="nav-item dropdown">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+        >
+          <i class="fa fa-info-circle"></i> Help
+        </a>
+        <div class="dropdown-menu">
+          <!-- <a class="dropdown-item" target="_blank" [href]="documentURL">{{
+                      'DocumentCenter' | translate
+                  }}
+                  </a> -->
+          <a class="dropdown-item">coming soon </a>
+          <!-- <a class="dropdown-item">{{ 'Version' | translate }}: {{ version }}</a> -->
+        </div>
+      </li>
+      <li class="nav-item dropdown nav-empid">
+        <a
+          class="nav-link dropdown-toggle"
+          href="#"
+          id="navbarDropdown"
+          role="button"
+          data-toggle="dropdown"
+        >
+          <i class="fa fa-user" aria-hidden="true"></i>
+          <span>User</span>
+          <!-- <span>{{ formatDisplayUser() }}</span> -->
+        </a>
+        <div class="dropdown-menu dropdown-menu-right">
+          <a (click)="onLogin()" class="dropdown-item">
+            <i class="fa fa-fw fa-sign-in"></i>登入</a
+          >
+          <!-- <a
+            *ngIf="authService.isLogin"
+            (click)="onLogout()"
+            class="dropdown-item"
+          >
+            <i class="fa fa-fw fa-sign-in"></i>登出</a
+          > -->
+        </div>
+      </li>
+    </ul>
+  </div>
+</nav>
