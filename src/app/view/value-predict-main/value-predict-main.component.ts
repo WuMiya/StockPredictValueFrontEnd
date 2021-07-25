@@ -35,7 +35,7 @@ export class ValuePredictMainComponent implements OnInit {
     
     this.dataSvc.getStockValuePredict(year,month,season,Number(this.companyId),Number(this.peRatio)).subscribe(
        (res) => {
-        this.predictValue = res.predictStockValue;
+        this.predictValue = res.peRatioList.historyPeRatio * res.predictYearEPS;
       },
       (error) => {
         console.log(error);

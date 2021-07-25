@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
+import * as internal from 'stream';
 
 const url = environment.apiURL;
 
@@ -47,19 +48,26 @@ export class DataService {
 export interface MonthRevenue {}
 
 export interface ValuePredict {
-  companyId: string,
-  companyName: string,
-    year: number,
-  season:  number,
-   revenue :  number,
-   cost :  number,
-   operatingFee :  number,
-   nonOperatingProfit :  number,
-   totalProfitAfterTax :  number,
-   eps :  number,
-   predictSeasonRevenue :  number,
-   predictSeasonMarginProfit :  number,
-   predictTotalProfitAfterTax :  number,
-   predictYearEPS :  number,
-   predictStockValue :  number
+  
+  stockInfo : StockApiParaModel,
+  peRatioList : PeRatioListModel,
+  predictSeasonMarginProfit :  number,
+  predictTotalProfitAfterTax :  number,
+  predictYearEPS :  number,
+   
+}
+export interface StockApiParaModel{
+  stockId : number,
+  stockName : string,
+  year : number,
+  month : number,
+  season : number
+}
+export interface PeRatioListModel{
+    //產業本益比
+    industryPeRatio : number,
+    //法人本益比
+    legalPeRatio : number,
+    //歷史計算本益比
+    historyPeRatio : number
 }
