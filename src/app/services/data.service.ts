@@ -51,11 +51,11 @@ export interface StockApiParaModel{
   season : number
 }
 export interface PeRatioListModel{
-    //ç”¢æ¥­æœ¬ç›Šæ¯”
+    //²£·~¥»¯q¤ñ
     industryPeRatio : number,
-    //æ³•äººæœ¬ç›Šæ¯”
+    //ªk¤H¥»¯q¤ñ
     legalPeRatio : number,
-    //æ­·å²è¨ˆç®—æœ¬ç›Šæ¯”
+    //¾ú¥v­pºâ¥»¯q¤ñ
     historyPeRatio : number
 }
 export interface MonthRevenue {}

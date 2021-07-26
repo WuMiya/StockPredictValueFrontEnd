@@ -1,12 +1,19 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ValuePredictMainComponent } from './view/value-predict-main/value-predict-main.component';
+import { TargetPricingViewComponent } from './view/stock-picking/target-pricing-view/target-pricing-view.component';
 
 const routes: Routes = [
-  { path: 'main-page', component: ValuePredictMainComponent },
+  // { path: 'leek-army', component: TargetPricingViewComponent },
+  {
+    path: 'leek-army',
+    loadChildren: () =>
+      import('./view/stock-picking/stock-picking.module').then(
+        (m) => m.StockPickingModule
+      ),
+  },
   {
     path: '**',
-    redirectTo: '/main-page',
+    redirectTo: '/leek-army',
   },
 ];
 

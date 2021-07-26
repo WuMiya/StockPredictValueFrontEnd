@@ -44,6 +44,7 @@ import { SafePercentPipe } from './pipes/safe.percent.pipe';
 import { SafeNumberPipe } from './pipes/safe.number.pipe';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { SiteMapComponent } from './site-map/site-map.component';
 
 const primengModules = [
   CheckboxModule,
@@ -98,7 +99,15 @@ const primengModules = [
     SafePercentPipe,
     SafeNumberPipe,
     TranslateModule,
+    SiteMapComponent,
   ],
-  declarations: [SafePercentPipe, SafeNumberPipe],
+  declarations: [SafePercentPipe, SafeNumberPipe, SiteMapComponent],
 })
-export class SharedModule {}
+export class SharedModule {
+  static forRoot() {
+    return {
+      ngModule: SharedModule,
+      providers: [],
+    };
+  }
+}
