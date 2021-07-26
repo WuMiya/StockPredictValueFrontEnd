@@ -1,6 +1,8 @@
+import { KeyValue } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
-import { DataService } from 'src/app/services/data.service';
+import { DataService, StockInfoModel } from 'src/app/services/data.service';
 import * as moment from 'moment';
+import { List } from 'lodash';
 
 @Component({
   selector: 'app-target-pricing-main',
@@ -12,11 +14,23 @@ export class TargetPricingMainComponent implements OnInit {
     { index: 3552, name: '同致', value: 252 },
     { index: 2330, name: '台積電', value: 589 },
   ];
-
+  stockName = "";
   companyId = 0;
   peRatio = 0;
   predictValue = 0;
-  constructor(private dataSvc: DataService) {}
+  idNameList:StockInfoModel[] = []; 
+  selectedStock: StockInfoModel | undefined;
+  constructor(private dataSvc: DataService) {
+     this.dataSvc
+      .getStockIdName().subscribe(
+        (res) => {
+            this.idNameList = res.payLoad;
+        },
+        (error) => {
+          console.log(error);
+        }
+      );
+  }
 
   ngOnInit(): void {
     console.log('run');
@@ -26,7 +40,7 @@ export class TargetPricingMainComponent implements OnInit {
     console.log(e);
 
     let year = moment().year() - 1911;
-    let month = moment().month() - 1;
+    let month = moment().month();
     let season = 1;
 
     this.dataSvc
@@ -34,12 +48,14 @@ export class TargetPricingMainComponent implements OnInit {
         year,
         month,
         season,
-        Number(this.companyId),
+        Number(this.selectedStock?.stockId),
         Number(this.peRatio)
       )
       .subscribe(
         (res) => {
-          this.predictValue = res.predictStockValue;
+            const tmp = res.payLoad;
+            console.log(tmp);
+            this.predictValue = tmp.peRatioList.historyPeRatio * tmp.predictYearEPS;
         },
         (error) => {
           console.log(error);
@@ -48,4 +64,33 @@ export class TargetPricingMainComponent implements OnInit {
 
     //execute action
   }
+
+  handleStockKeyIn(e: any){
+    var list : string[] =[''];
+    list.pop();
+     this.idNameList.forEach(element => {
+        let temp  = element.stockId;
+        for (var i = 0; i < 4; i ++) 
+        {
+          var r = (temp / this.companyId);
+          if(r == 1)
+          {
+              //this.searchList.push(element);
+
+             console.log("Search: "+element.stockId+" "+element.stockName);
+          }
+          else if(r < 1)
+          {
+            break;
+          }
+
+          temp = Math.floor(temp/10); 
+        }
+    });
+    //var SelectCtrl = function($scope: { Name: string[]; }) {
+	  //$scope.Name = list;
+  
+  }
+
+
 }

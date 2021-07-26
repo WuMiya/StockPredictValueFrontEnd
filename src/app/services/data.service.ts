@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 const url = environment.apiURL;
@@ -19,6 +19,7 @@ export class DataService {
     };
     return this.http.post<MonthRevenue>(queryURL, query);
   }
+  
   getStockValuePredict(year: number, month: number,season: number, stockId: number, peRatio: number)
   {
     const queryURL = url + 'PredictValueInfo';
@@ -27,9 +28,15 @@ export class DataService {
       month: month,
       season: season,
       stockId: stockId,
-      stockName: 0
+      stockName: ""
     };
     return this.http.post<Resp<ValuePredict>>(queryURL, query);
+  }
+  getStockIdName()
+  {
+    const queryURL = url + 'GetStockInfo';
+     
+    return this.http.get<Resp<StockInfoModel[]>>(queryURL);
   }
   // getSOOutputProductivity(startDate, endDate) {
   //   const qURL = `${apiURL}/WorkHourEfficiency/SOOutputProductivity`;
@@ -43,21 +50,6 @@ export class DataService {
   //   return this.http.get<SOEfficiency[]>(qURL, { params });
   // }
 }
-export interface StockApiParaModel{
-  stockId : number,
-  stockName : string,
-  year : number,
-  month : number,
-  season : number
-}
-export interface PeRatioListModel{
-    //產業本益比
-    industryPeRatio : number,
-    //法人本益比
-    legalPeRatio : number,
-    //歷史計算本益比
-    historyPeRatio : number
-}
 export interface MonthRevenue {}
 
 export interface ValuePredict {
@@ -69,10 +61,34 @@ export interface ValuePredict {
   predictYearEPS :  number,
    
 }
+export interface TabItem {
+  name: string;
+  iconClass: string;
+  link?: string;
+  href?: string;
+  nested?: TabItem[];
+}
 export interface Resp<T> {
   succ: boolean;
   code: number;
   message: string;
   dataTime: string;
   payLoad: T;
+}
+export interface StockApiParaModel{
+  stockId : number,
+  stockName : string,
+  year : number,
+  month : number,
+  season : number
+}
+export interface PeRatioListModel{
+    industryPeRatio : number,
+    legalPeRatio : number,
+    historyPeRatio : number
+}
+export interface StockInfoModel
+{
+    stockId :number,
+    stockName :string        
 }

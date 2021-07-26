@@ -27,14 +27,10 @@
     </div>
     <div class="col-6">
       <h5>股票號碼</h5>
-      <input type="text" pInputText [(ngModel)]="companyId" />
-      <span class="p-ml-2">{{ companyId }}</span>
-
-      <h5>本益比</h5>
-      <span class="p-float-label">
-        <input id="float-input" type="text" pInputText [(ngModel)]="peRatio" />
-        <span class="p-ml-2">{{ peRatio }}</span>
-      </span>
+      <input type="text" pInputText [(ngModel)]="companyId" (keyup)="handleStockKeyIn($event)"/>
+      <p-dropdown [options]="idNameList" [(ngModel)]="selectedStock" optionLabel="stockId" [filter]="true" filterMatchMode="startsWith"></p-dropdown>
+      <p>{{ stockName }}</p>
+      <span class="p-ml-2">{{ stockName }}</span>
       <!-- <button pButton type="button" label="Click" (click)="handleClick($event)"></button> -->
       <p-button label="Click" (onClick)="handleClick($event)"></p-button>
       <h5>預估價值</h5>
