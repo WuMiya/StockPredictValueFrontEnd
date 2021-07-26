@@ -19,47 +19,37 @@ export class DataService {
     };
     return this.http.post<MonthRevenue>(queryURL, query);
   }
-  
-  getStockValuePredict(year: number, month: number,season: number, stockId: number, peRatio: number)
-  {
+
+  getStockValuePredict(
+    year: number,
+    month: number,
+    season: number,
+    stockId: number,
+    peRatio: number
+  ) {
     const queryURL = url + 'PredictValueInfo';
-      const query = {
+    const query = {
       year: year,
       month: month,
       season: season,
       stockId: stockId,
-      stockName: ""
+      stockName: '',
     };
     return this.http.post<Resp<ValuePredict>>(queryURL, query);
   }
-  getStockIdName()
-  {
+  getStockIdName() {
     const queryURL = url + 'GetStockInfo';
-     
     return this.http.get<Resp<StockInfoModel[]>>(queryURL);
   }
-  // getSOOutputProductivity(startDate, endDate) {
-  //   const qURL = `${apiURL}/WorkHourEfficiency/SOOutputProductivity`;
-  //   const params = new HttpParams().set('Start', startDate).set('End', endDate);
-  //   return this.http.get<SOOutputProductivity[]>(qURL, { params });
-  // }
-
-  // getSOWorkHourEfficiency(startDate, endDate) {
-  //   const qURL = `${apiURL}/WorkHourEfficiency/SOEfficiency`;
-  //   const params = new HttpParams().set('Start', startDate).set('End', endDate);
-  //   return this.http.get<SOEfficiency[]>(qURL, { params });
-  // }
 }
 export interface MonthRevenue {}
 
 export interface ValuePredict {
-  
-  stockInfo : StockApiParaModel,
-  peRatioList : PeRatioListModel,
-  predictSeasonMarginProfit :  number,
-  predictTotalProfitAfterTax :  number,
-  predictYearEPS :  number,
-   
+  stockInfo: StockApiParaModel;
+  peRatioList: PeRatioListModel;
+  predictSeasonMarginProfit: number;
+  predictTotalProfitAfterTax: number;
+  predictYearEPS: number;
 }
 export interface TabItem {
   name: string;
@@ -75,20 +65,19 @@ export interface Resp<T> {
   dataTime: string;
   payLoad: T;
 }
-export interface StockApiParaModel{
-  stockId : number,
-  stockName : string,
-  year : number,
-  month : number,
-  season : number
+export interface StockApiParaModel {
+  stockId: number;
+  stockName: string;
+  year: number;
+  month: number;
+  season: number;
 }
-export interface PeRatioListModel{
-    industryPeRatio : number,
-    legalPeRatio : number,
-    historyPeRatio : number
+export interface PeRatioListModel {
+  industryPeRatio: number;
+  legalPeRatio: number;
+  historyPeRatio: number;
 }
-export interface StockInfoModel
-{
-    stockId :number,
-    stockName :string        
+export interface StockInfoModel {
+  stockId: number;
+  stockName: string;
 }
