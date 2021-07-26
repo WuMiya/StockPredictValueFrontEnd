@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import * as internal from 'stream';
 
 const url = environment.apiURL;
 
@@ -22,16 +21,15 @@ export class DataService {
   }
   getStockValuePredict(year: number, month: number,season: number, stockId: number, peRatio: number)
   {
-    const queryURL = url + 'PredictValue';
+    const queryURL = url + 'PredictValueInfo';
       const query = {
       year: year,
       month: month,
       season: season,
-      companyId: stockId,
-      peRatio: peRatio,
-    
+      stockId: stockId,
+      stockName: 0
     };
-    return this.http.post<ValuePredict>(queryURL, query);
+    return this.http.post<Resp<ValuePredict>>(queryURL, query);
   }
   // getSOOutputProductivity(startDate, endDate) {
   //   const qURL = `${apiURL}/WorkHourEfficiency/SOOutputProductivity`;
@@ -44,17 +42,6 @@ export class DataService {
   //   const params = new HttpParams().set('Start', startDate).set('End', endDate);
   //   return this.http.get<SOEfficiency[]>(qURL, { params });
   // }
-}
-export interface MonthRevenue {}
-
-export interface ValuePredict {
-  
-  stockInfo : StockApiParaModel,
-  peRatioList : PeRatioListModel,
-  predictSeasonMarginProfit :  number,
-  predictTotalProfitAfterTax :  number,
-  predictYearEPS :  number,
-   
 }
 export interface StockApiParaModel{
   stockId : number,
@@ -70,4 +57,22 @@ export interface PeRatioListModel{
     legalPeRatio : number,
     //歷史計算本益比
     historyPeRatio : number
+}
+export interface MonthRevenue {}
+
+export interface ValuePredict {
+  
+  stockInfo : StockApiParaModel,
+  peRatioList : PeRatioListModel,
+  predictSeasonMarginProfit :  number,
+  predictTotalProfitAfterTax :  number,
+  predictYearEPS :  number,
+   
+}
+export interface Resp<T> {
+  succ: boolean;
+  code: number;
+  message: string;
+  dataTime: string;
+  payLoad: T;
 }
