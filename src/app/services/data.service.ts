@@ -21,19 +21,15 @@ export class DataService {
   }
 
   getStockValuePredict(
-    year: number,
-    month: number,
-    season: number,
-    stockId: number,
-    peRatio: number
+    info: StockApiParaModel,
+       
   ) {
     const queryURL = url + 'PredictValueInfo';
     const query = {
-      year: year,
-      month: month,
-      season: season,
-      stockId: stockId,
-      stockName: '',
+      year : info.year,
+      month: info.month,
+      season: info.season,
+      stockInfo: info.stockInfo
     };
     return this.http.post<Resp<ValuePredict>>(queryURL, query);
   }
@@ -45,7 +41,7 @@ export class DataService {
 export interface MonthRevenue {}
 
 export interface ValuePredict {
-  stockInfo: StockApiParaModel;
+  stockPara: StockApiParaModel;
   peRatioList: PeRatioListModel;
   predictSeasonMarginProfit: number;
   predictTotalProfitAfterTax: number;
@@ -66,8 +62,7 @@ export interface Resp<T> {
   payLoad: T;
 }
 export interface StockApiParaModel {
-  stockId: number;
-  stockName: string;
+  stockInfo: StockInfoModel;
   year: number;
   month: number;
   season: number;
@@ -80,4 +75,5 @@ export interface PeRatioListModel {
 export interface StockInfoModel {
   stockId: number;
   stockName: string;
+  stockType: string;
 }
