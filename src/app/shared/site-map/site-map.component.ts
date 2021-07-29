@@ -43,7 +43,7 @@ export class SiteMapComponent implements OnInit {
     //   console.log('已登出');
     // });
     if (_.includes(this.router.url, 'stock-picking')) {
-      this.router.navigate(['/leek-army/stock-picking']);
+      this.router.navigate(['/stock-picking']);
     } else {
       this.router.navigate(['/']);
     }

@@ -1,19 +1,19 @@
 <div class="container-fluid mt-2">
   <div class="row">
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6 col-lg-6">
       <div class="card">
         <div class="card-header-sm">目標價選股</div>
         <div class="card-body" style="padding: 30px">
           <h5>股票號碼</h5>
           <div class="d-flex">
             <p-dropdown
-              [style]="{ width: '200px' }"
+              [style]="{ width: '40vw' }"
               [options]="idNameList"
-              [(ngModel)]="selectedStock"
+              [ngModel]="selectedStock"
               placeholder="請選擇"
               [filter]="true"
               filterBy="searchKey"
-              (onHide)="handleClick()"
+              (onChange)="handleClick($event)"
             ></p-dropdown>
             <i
               class="fa fa-spinner fa-pulse ml-2 fa-x fa-fw float-right"
@@ -36,7 +36,7 @@
         </div>
       </div>
     </div>
-    <div class="col-6">
+    <div class="col-sm-12 col-md-6 col-lg-6">
       <div class="card">
         <div class="card-header-sm">查詢紀錄</div>
         <div class="card-body" style="padding: 30px">
@@ -45,6 +45,8 @@
             dataKey="index"
             [responsive]="true"
             styleClass="p-datatable-sm p-datatable-gridlines"
+            [scrollable]="true"
+            scrollHeight="850px"
           >
             <ng-template pTemplate="header">
               <tr style="font-size: small">
@@ -55,7 +57,7 @@
             </ng-template>
             <ng-template pTemplate="body" let-row>
               <tr style="font-size: small">
-                <td>{{ row.index }}</td>
+                <td>{{ row.index + 1 }}</td>
                 <td>
                   {{ row.name }}
                 </td>

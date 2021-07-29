@@ -1,5 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { DataService, StockApiParaModel, StockInfoModel } from 'src/app/services/data.service';
+import {
+  DataService,
+  StockApiParaModel,
+  StockInfoModel,
+} from 'src/app/services/data.service';
 import * as moment from 'moment';
 
 @Component({
@@ -37,7 +41,11 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
           label: x.stockId + ' ' + x.stockName,
           // value: x.stockId,
           searchKey: x.stockId + x.stockName,
-          value: { stockId: x.stockId, stockName: x.stockName , stockType: x.stockType},
+          value: {
+            stockId: x.stockId,
+            stockName: x.stockName,
+            stockType: x.stockType,
+          },
         }));
       },
       (error) => {
@@ -46,42 +54,35 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
     );
   }
 
-  handleClick() {
+  handleClick(e: any) {
+    this.selectedStock = e.value;
     this.loading = true;
     const year = moment().year() - 1911;
     const month = moment().month();
     const season = 1;
-    let stockInfo = {
-      stockId : this.selectedStock.stockId,
-      stockName : this.selectedStock.stockName,
-      stockType : this.selectedStock.stockType
-    } as StockInfoModel;
-    let para ={
-      year : year,
-      month : month,
-      season : season,
-      stockInfo : stockInfo
-    }   as StockApiParaModel;
 
-    this.dataSvc
-      .getStockValuePredict(
-        para
-      )
-      .subscribe(
-        (res) => {
-          this.loading = false;
-          const tmp = res.payLoad;
-          this.historyPeRatio = tmp.peRatioList.historyPeRatio;
-          this.predictYearEPS = tmp.predictYearEPS;
-          const value = this.historyPeRatio * tmp.predictYearEPS;
-          this.predictValue = value && value > 0 ? value : 0;
-          this.setRecordTable();
-        },
-        (error) => {
-          this.loading = false;
-          console.log(error);
-        }
-      );
+    const para = {
+      year: year,
+      month: month,
+      season: season,
+      stockInfo: this.selectedStock,
+    } as StockApiParaModel;
+
+    this.dataSvc.getStockValuePredict(para).subscribe(
+      (res) => {
+        this.loading = false;
+        const tmp = res.payLoad;
+        this.historyPeRatio = tmp.peRatioList.historyPeRatio;
+        this.predictYearEPS = tmp.predictYearEPS;
+        const value = this.historyPeRatio * tmp.predictYearEPS;
+        this.predictValue = value && value > 0 ? value : 0;
+        this.setRecordTable();
+      },
+      (error) => {
+        this.loading = false;
+        console.log(error);
+      }
+    );
 
     //execute action
   }

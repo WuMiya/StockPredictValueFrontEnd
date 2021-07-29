@@ -5,7 +5,7 @@ import { TargetPricingViewComponent } from './target-pricing-view/target-pricing
 
 const routes: Routes = [
   {
-    path: 'stock-picking',
+    path: '',
     component: TargetPricingViewComponent,
     children: [
       {

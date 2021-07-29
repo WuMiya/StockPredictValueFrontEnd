@@ -5,7 +5,7 @@ import { TargetPricingViewComponent } from './view/stock-picking/target-pricing-
 const routes: Routes = [
   // { path: 'leek-army', component: TargetPricingViewComponent },
   {
-    path: 'leek-army',
+    path: 'stock-picking',
     loadChildren: () =>
       import('./view/stock-picking/stock-picking.module').then(
         (m) => m.StockPickingModule
@@ -13,7 +13,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: '/leek-army',
+    redirectTo: 'stock-picking',
   },
 ];
 

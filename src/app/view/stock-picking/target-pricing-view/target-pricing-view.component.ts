@@ -30,19 +30,19 @@ export class TargetPricingViewComponent implements OnInit {
           {
             name: '目標價選股',
             iconClass: '',
-            link: '/leek-army/stock-picking/target-price',
+            link: '/stock-picking/target-price',
           },
           {
             name: '短線綜合選股',
             iconClass: '',
-            link: '/leek-army/stock-picking/short-term-mix',
+            link: '/stock-picking/short-term-mix',
           },
         ],
       },
       {
         name: '歷史資料',
         iconClass: '',
-        link: '/leek-army/history-record',
+        link: '/history-record',
       },
     ];
   }
