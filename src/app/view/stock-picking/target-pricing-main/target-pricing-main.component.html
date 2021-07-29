@@ -13,26 +13,78 @@
               placeholder="請選擇"
               [filter]="true"
               filterBy="searchKey"
-              (onChange)="handleClick($event)"
+              (onChange)="onUpdateStock($event)"
             ></p-dropdown>
             <i
               class="fa fa-spinner fa-pulse ml-2 fa-x fa-fw float-right"
               *ngIf="loading"
             ></i>
           </div>
+          <div class="row mt-2">
+            <div class="col-6">
+              <div class="mt-2 mb-2">預估年EPS</div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="歷史本益比"
+                  label="歷史本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+              </div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="法人本益比"
+                  label="法人本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+              </div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="自訂本益比"
+                  label="自訂本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+                <p-inputNumber
+                  [(ngModel)]="customizePeRatio"
+                  (onBlur)="updateCustomizePeRatio()"
+                ></p-inputNumber>
+              </div>
 
-          <h5 class="mt-2">歷史本益比</h5>
-          <span class="mt-2 text-primary">
-            {{ historyPeRatio | number: "1.0-2" }}</span
-          >
-          <h5 class="mt-2">預估年EPS</h5>
-          <span class="mt-2 text-primary">{{
-            predictYearEPS | number: "1.0-2"
-          }}</span>
-          <h5 class="mt-2">預估價值</h5>
-          <span class="mt-2 text-primary">{{
-            predictValue | number: "1.0-2"
-          }}</span>
+              <div class="mt-2" style="font-size: large; font-weight: 900">
+                預估價值
+                <i
+                  [pTooltip]="toolTips"
+                  tooltipPosition="bottom"
+                  class="ml-1 fa fa-info-circle"
+                ></i>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mt-2 mb-2 text-primary">
+                {{ predictYearEPS | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ historyPeRatio | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ historyPeRatio | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ customizePeRatio | number: "1.0-2" }}
+              </div>
+              <div
+                class="mt-2 text-primary"
+                style="font-size: large; font-weight: 900"
+              >
+                {{ predictValue | number: "1.0-2" }}
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>

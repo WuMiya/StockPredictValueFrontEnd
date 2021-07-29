@@ -37,6 +37,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 // AmChart module
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
@@ -73,6 +75,8 @@ const primengModules = [
   SplitButtonModule,
   ToolbarModule,
   ConfirmDialogModule,
+  RadioButtonModule,
+  InputNumberModule,
 ];
 
 @NgModule({

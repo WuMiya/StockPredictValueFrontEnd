@@ -12,11 +12,7 @@ import * as moment from 'moment';
   styleUrls: ['./target-pricing-main.component.scss'],
 })
 export class TargetPricingMainComponent implements OnInit, OnDestroy {
-  stockList = [
-    { index: 0, name: '', value: 0 },
-    // { index: 3552, name: '同致', value: 252 },
-    // { index: 2330, name: '台積電', value: 589 },
-  ];
+  stockList = [{ index: 0, name: '', value: 0 }];
   stockName = '';
   companyId = 0;
   peRatio = 0;
@@ -26,6 +22,9 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
   historyPeRatio = 0;
   predictYearEPS = 0;
   loading = false;
+  selectedPeRatioType = '歷史本益比';
+  customizePeRatio = 0;
+  toolTips = '';
 
   constructor(private dataSvc: DataService) {}
 
@@ -54,12 +53,24 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
     );
   }
 
-  handleClick(e: any) {
+  getYearSeason() {
+    let year = moment().year() - 1911;
+    const month = moment().month() + 1; // jan = 0, dec = 11
+
+    let season = Math.floor(month / 3) - 1;
+    if (season === 0) {
+      year = year - 1;
+      season = 4;
+    }
+    return { year: year, season: season };
+  }
+
+  onUpdateStock(e: any) {
     this.selectedStock = e.value;
     this.loading = true;
-    const year = moment().year() - 1911;
-    const month = moment().month();
-    const season = 1;
+    const year = this.getYearSeason().year;
+    const month = moment().month(); // jan = 0, dec = 11
+    const season = this.getYearSeason().season;
 
     const para = {
       year: year,
@@ -71,11 +82,10 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
     this.dataSvc.getStockValuePredict(para).subscribe(
       (res) => {
         this.loading = false;
-        const tmp = res.payLoad;
-        this.historyPeRatio = tmp.peRatioList.historyPeRatio;
-        this.predictYearEPS = tmp.predictYearEPS;
-        const value = this.historyPeRatio * tmp.predictYearEPS;
-        this.predictValue = value && value > 0 ? value : 0;
+        const payLoad = res.payLoad;
+        this.historyPeRatio = payLoad.peRatioList.historyPeRatio;
+        this.predictYearEPS = payLoad.predictYearEPS;
+        this.query();
         this.setRecordTable();
       },
       (error) => {
@@ -83,8 +93,31 @@ export class TargetPricingMainComponent implements OnInit, OnDestroy {
         console.log(error);
       }
     );
+  }
 
-    //execute action
+  updateCustomizePeRatio() {
+    this.selectedPeRatioType === '自訂本益比';
+    this.query();
+  }
+
+  query() {
+    this.predictValue = 0;
+    this.toolTips = `預估年EPS * ${this.selectedPeRatioType}`;
+
+    switch (this.selectedPeRatioType) {
+      case '歷史本益比':
+        this.predictValue = this.historyPeRatio * this.predictYearEPS;
+        break;
+      case '法人本益比':
+        this.predictValue = this.historyPeRatio * this.predictYearEPS;
+        break;
+      case '自訂本益比':
+        this.predictValue = this.customizePeRatio * this.predictYearEPS;
+        break;
+    }
+    if (this.predictValue < 0) {
+      this.predictValue = 0;
+    }
   }
 
   setRecordTable() {
