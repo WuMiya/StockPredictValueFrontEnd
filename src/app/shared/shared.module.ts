@@ -37,6 +37,8 @@ import { SplitButtonModule } from 'primeng/splitbutton';
 import { ToolbarModule } from 'primeng/toolbar';
 import { ConfirmationService } from 'primeng/api';
 import { ConfirmDialogModule } from 'primeng/confirmdialog';
+import { RadioButtonModule } from 'primeng/radiobutton';
+import { InputNumberModule } from 'primeng/inputnumber';
 
 // AmChart module
 import { AmChartsModule } from '@amcharts/amcharts3-angular';
@@ -44,6 +46,7 @@ import { SafePercentPipe } from './pipes/safe.percent.pipe';
 import { SafeNumberPipe } from './pipes/safe.number.pipe';
 
 import { TranslateModule } from '@ngx-translate/core';
+import { SiteMapComponent } from './site-map/site-map.component';
 
 const primengModules = [
   CheckboxModule,
@@ -72,6 +75,8 @@ const primengModules = [
   SplitButtonModule,
   ToolbarModule,
   ConfirmDialogModule,
+  RadioButtonModule,
+  InputNumberModule,
 ];
 
 @NgModule({
@@ -98,7 +103,15 @@ const primengModules = [
     SafePercentPipe,
     SafeNumberPipe,
     TranslateModule,
+    SiteMapComponent,
   ],
-  declarations: [SafePercentPipe, SafeNumberPipe],
+  declarations: [SafePercentPipe, SafeNumberPipe, SiteMapComponent],
 })
-export class SharedModule {}
+export class SharedModule {
+  static forRoot() {
+    return {
+      ngModule: SharedModule,
+      providers: [],
+    };
+  }
+}

@@ -1,0 +1,124 @@
+<div class="container-fluid mt-2">
+  <div class="row">
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <div class="card">
+        <div class="card-header-sm">目標價選股</div>
+        <div class="card-body" style="padding: 30px">
+          <h5>股票號碼</h5>
+          <div class="d-flex">
+            <p-dropdown
+              [style]="{ width: '40vw' }"
+              [options]="idNameList"
+              [ngModel]="selectedStock"
+              placeholder="請選擇"
+              [filter]="true"
+              filterBy="searchKey"
+              (onChange)="onUpdateStock($event)"
+            ></p-dropdown>
+            <i
+              class="fa fa-spinner fa-pulse ml-2 fa-x fa-fw float-right"
+              *ngIf="loading"
+            ></i>
+          </div>
+          <div class="row mt-2">
+            <div class="col-6">
+              <div class="mt-2 mb-2">預估年EPS</div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="歷史本益比"
+                  label="歷史本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+              </div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="法人本益比"
+                  label="法人本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+              </div>
+              <div class="mt-2">
+                <p-radioButton
+                  name="peRatioType"
+                  value="自訂本益比"
+                  label="自訂本益比"
+                  [(ngModel)]="selectedPeRatioType"
+                  (onClick)="query()"
+                ></p-radioButton>
+                <p-inputNumber
+                  [(ngModel)]="customizePeRatio"
+                  (onBlur)="updateCustomizePeRatio()"
+                ></p-inputNumber>
+              </div>
+
+              <div class="mt-2" style="font-size: large; font-weight: 900">
+                預估價值
+                <i
+                  [pTooltip]="toolTips"
+                  tooltipPosition="bottom"
+                  class="ml-1 fa fa-info-circle"
+                ></i>
+              </div>
+            </div>
+            <div class="col-6">
+              <div class="mt-2 mb-2 text-primary">
+                {{ predictYearEPS | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ historyPeRatio | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ historyPeRatio | number: "1.0-2" }}
+              </div>
+              <div class="mt-2 text-primary">
+                {{ customizePeRatio | number: "1.0-2" }}
+              </div>
+              <div
+                class="mt-2 text-primary"
+                style="font-size: large; font-weight: 900"
+              >
+                {{ predictValue | number: "1.0-2" }}
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-sm-12 col-md-6 col-lg-6">
+      <div class="card">
+        <div class="card-header-sm">查詢紀錄</div>
+        <div class="card-body" style="padding: 30px">
+          <p-table
+            [value]="stockList"
+            dataKey="index"
+            [responsive]="true"
+            styleClass="p-datatable-sm p-datatable-gridlines"
+            [scrollable]="true"
+            scrollHeight="850px"
+          >
+            <ng-template pTemplate="header">
+              <tr style="font-size: small">
+                <th>Index</th>
+                <th>Name</th>
+                <th>Value</th>
+              </tr>
+            </ng-template>
+            <ng-template pTemplate="body" let-row>
+              <tr style="font-size: small">
+                <td>{{ row.index + 1 }}</td>
+                <td>
+                  {{ row.name }}
+                </td>
+                <td>{{ row.value | number: "1.0-2" }}</td>
+              </tr>
+            </ng-template>
+          </p-table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
