@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
 
 const url = environment.apiURL;
@@ -20,22 +20,28 @@ export class DataService {
     return this.http.post<MonthRevenue>(queryURL, query);
   }
 
-  getStockValuePredict(
-    info: StockApiParaModel,
-       
-  ) {
+  getStockValuePredict(info: StockApiParaModel) {
     const queryURL = url + 'PredictValueInfo';
     const query = {
-      year : info.year,
+      year: info.year,
       month: info.month,
       season: info.season,
-      stockInfo: info.stockInfo
+      stockInfo: info.stockInfo,
     };
     return this.http.post<Resp<ValuePredict>>(queryURL, query);
   }
   getStockIdName() {
     const queryURL = url + 'GetStockInfo';
     return this.http.get<Resp<StockInfoModel[]>>(queryURL);
+  }
+
+  getTop20VolumeStocks(date: string) {
+    const queryURL =
+      'https://www.twse.com.tw/exchangeReport/MI_INDEX20?response=json&date=20210802&_=1627912158345';
+    // const params = new HttpParams().set('date', date).set('_', 1627912158345);
+    // const params = new HttpParams().set('date', date);
+    return this.http.get<Top20VloumeStockInfo>(queryURL);
+    // return this.http.get<Top20VloumeStockInfo>(queryURL, { params });
   }
 }
 export interface MonthRevenue {}
@@ -76,4 +82,10 @@ export interface StockInfoModel {
   stockId: number;
   stockName: string;
   stockType: string;
+}
+export interface Top20VloumeStockInfo {
+  data: any[];
+  date: string;
+  fields: string[];
+  notes: string[];
 }

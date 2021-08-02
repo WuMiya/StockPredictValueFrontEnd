@@ -5,44 +5,48 @@ import { TargetPricingViewComponent } from './target-pricing-view/target-pricing
 
 const routes: Routes = [
   {
-    path: '',
-    component: TargetPricingViewComponent,
-    children: [
-      {
-        path: 'target-price',
-        component: TargetPricingMainComponent,
-      },
-      // {
-      //   path: 'productivity',
-      //   component: ProductivityMainComponent,
-      // },
-      // {
-      //   path: 'inboundQty',
-      //   component: InboundQtyMainComponent,
-      // },
-      // {
-      //   path: 'final-yield-rate',
-      //   component: FinalYieldRateComponent,
-      // },
-      // {
-      //   path: 'scrap-cost',
-      //   component: ScrapCostComponent,
-      // },
-      // {
-      //   path: 'afr6-info',
-      //   component: Afr6InfoComponent,
-      // },
-      // {
-      //   path: 'issue',
-      //   component: IssueTrackingComponent,
-      // },
-      // {
-      //   path: 'issue-overview',
-      //   component: IssueOverviewMainComponent,
-      // },
-      { path: '**', redirectTo: 'target-price' },
-    ],
+    path: 'target-price',
+    component: TargetPricingMainComponent,
   },
+  // {
+  //   path: '',
+  //   component: TargetPricingViewComponent,
+  //   children: [
+  //     {
+  //       path: 'target-price',
+  //       component: TargetPricingMainComponent,
+  //     },
+  //     // {
+  //     //   path: 'productivity',
+  //     //   component: ProductivityMainComponent,
+  //     // },
+  //     // {
+  //     //   path: 'inboundQty',
+  //     //   component: InboundQtyMainComponent,
+  //     // },
+  //     // {
+  //     //   path: 'final-yield-rate',
+  //     //   component: FinalYieldRateComponent,
+  //     // },
+  //     // {
+  //     //   path: 'scrap-cost',
+  //     //   component: ScrapCostComponent,
+  //     // },
+  //     // {
+  //     //   path: 'afr6-info',
+  //     //   component: Afr6InfoComponent,
+  //     // },
+  //     // {
+  //     //   path: 'issue',
+  //     //   component: IssueTrackingComponent,
+  //     // },
+  //     // {
+  //     //   path: 'issue-overview',
+  //     //   component: IssueOverviewMainComponent,
+  //     // },
+  //     { path: '**', redirectTo: 'target-price' },
+  //   ],
+  // },
 ];
 
 @NgModule({

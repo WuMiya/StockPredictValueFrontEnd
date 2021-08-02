@@ -1,9 +1,9 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { TargetPricingViewComponent } from './view/stock-picking/target-pricing-view/target-pricing-view.component';
+import { SiteMapViewComponent } from './shared/site-map-view/site-map-view.component';
 
 const routes: Routes = [
-  // { path: 'leek-army', component: TargetPricingViewComponent },
+  { path: 'sitemap', component: SiteMapViewComponent },
   {
     path: 'stock-picking',
     loadChildren: () =>
@@ -12,9 +12,13 @@ const routes: Routes = [
       ),
   },
   {
-    path: '**',
-    redirectTo: 'stock-picking',
+    path: 'top20-volume-stock',
+    loadChildren: () =>
+      import('./view/top20-volume-stock/top20-volume-stock.module').then(
+        (m) => m.Top20VolumeStockModule
+      ),
   },
+  { path: '**', redirectTo: '/sitemap' },
 ];
 
 @NgModule({
