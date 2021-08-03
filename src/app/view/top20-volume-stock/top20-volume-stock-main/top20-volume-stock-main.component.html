@@ -1,2 +1,43 @@
 <app-site-map-view></app-site-map-view>
-<div class="container-fluid mt-2"></div>
+<div class="container-fluid mt-2">
+  <h3 style="text-align: center">{{ date }} 成交量前二十名證券</h3>
+  <p-table
+    [value]="top20VolumeStocks"
+    [columns]="headers"
+    [loading]="loading"
+    [scrollable]="true"
+    [style]="{
+      'min-width': '1392px'
+    }"
+    scrollHeight="980px"
+    styleClass="p-datatable-sm p-datatable-gridlines"
+  >
+    <ng-template pTemplate="header" let-columns>
+      <tr>
+        <th
+          *ngFor="let col of columns"
+          [ngStyle]="col.style"
+          pSortableColumn="{{ col.field }}"
+          style="word-break: break-word; font-size: small; text-align: center"
+        >
+          {{ col.header }}
+          <p-sortIcon field="{{ col.field }}"></p-sortIcon>
+        </th>
+      </tr>
+    </ng-template>
+    <ng-template pTemplate="body" let-item let-columns="columns">
+      <tr>
+        <td
+          *ngFor="let col of columns; let i = index"
+          [ngStyle]="col.style"
+          [ngClass]="{
+            'text-center': i < 3 || i === 9,
+            'text-right': i > 2
+          }"
+        >
+          <div [innerHtml]="item[col.field]"></div>
+        </td>
+      </tr>
+    </ng-template>
+  </p-table>
+</div>
