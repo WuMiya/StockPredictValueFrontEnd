@@ -38,7 +38,7 @@ export class DataService {
     const queryURL = url + 'Get20TopTradingAmountStocks';
     // const params = new HttpParams().set('date', date).set('_', 1627912158345);
     // const params = new HttpParams().set('date', date);
-    return this.http.get<Resp<Top20VloumeStockResp>>(queryURL);
+    return this.http.get<Resp<Top20VloumeStockResp[]>>(queryURL);
   }
 
   // getTop20VolumeStocks(date: string): Observable<any> {
@@ -104,16 +104,25 @@ export interface PeRatioListModel {
 }
 
 export interface StockInfoModel {
-  stockId: number;
+  stockId: string;
   stockName: string;
   stockType: string;
 }
 
 export interface Top20VloumeStockResp {
-  data: any[];
-  date: string;
-  fields: string[];
-  notes: string[];
+  companyId: string;
+  companyName: string;
+  transactionShares: number;
+  transactionAmount: number;
+  openingPrice: number;
+  highestPrice: number;
+  lowestPrice: number;
+  closingPrice: number;
+  upsDowns: string;
+  priceDifference: number;
+  lastRevealBuyPrice: number;
+  lastRevealSealPrice: number;
+  rank: number;
 }
 
 export interface Top20VloumeStockInfo {
