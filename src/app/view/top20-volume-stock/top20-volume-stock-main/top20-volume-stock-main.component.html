@@ -37,6 +37,7 @@
           }"
         >
           <span
+            *ngIf="typeOf(item[col.field]) !== 'number'"
             [ngStyle]="{
               color: getColor(item[col.field]),
               'font-weight': getFontWeight(item[col.field]),
@@ -44,6 +45,16 @@
             }"
           >
             {{ item[col.field] }}
+          </span>
+          <span
+            *ngIf="typeOf(item[col.field]) === 'number'"
+            [ngStyle]="{
+              color: getColor(item[col.field]),
+              'font-weight': getFontWeight(item[col.field]),
+              'font-size': getFontSize(item[col.field])
+            }"
+          >
+            {{ item[col.field] | number: "1.0-2" }}
           </span>
         </td>
       </tr>

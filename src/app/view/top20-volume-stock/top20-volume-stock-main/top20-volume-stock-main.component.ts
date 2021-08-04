@@ -83,6 +83,10 @@ export class Top20VolumeStockMainComponent implements OnInit {
     );
   }
 
+  typeOf(value: any) {
+    return typeof value;
+  }
+
   getColor(val: string) {
     switch (val) {
       case '+':
