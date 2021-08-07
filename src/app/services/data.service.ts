@@ -36,9 +36,7 @@ export class DataService {
 
   getTop20VolumeStocks() {
     const queryURL = url + 'Get20TopTradingAmountStocks';
-    // const params = new HttpParams().set('date', date).set('_', 1627912158345);
-    // const params = new HttpParams().set('date', date);
-    return this.http.get<Resp<Top20VloumeStockResp[]>>(queryURL);
+    return this.http.get<Resp<Top20VloumeStockInfo[]>>(queryURL);
   }
 
   // getTop20VolumeStocks(date: string): Observable<any> {
@@ -104,60 +102,29 @@ export interface PeRatioListModel {
 }
 
 export interface StockInfoModel {
-  stockId: string;
+  stockId: number;
   stockName: string;
   stockType: string;
 }
 
-export interface Top20VloumeStockResp {
+export interface Top20VloumeStockInfo {
+  closingPrice: number;
   companyId: string;
   companyName: string;
-  transactionShares: number;
-  transactionAmount: number;
-  openingPrice: number;
   highestPrice: number;
-  lowestPrice: number;
-  closingPrice: number;
-  upsDowns: string;
-  priceDifference: number;
   lastRevealBuyPrice: number;
   lastRevealSealPrice: number;
+  lowestPrice: number;
+  openingPrice: number;
+  priceDifference: number;
   rank: number;
+  transactionAmount: number;
+  transactionShares: number;
+  upsDowns: string;
 }
 
-export interface Top20VloumeStockInfo {
-  排名: string;
-  證券代號: string;
-  證券名稱: string;
-  成交股數: string;
-  成交筆數: string;
-  開盤價: string;
-  最高價: string;
-  最低價: string;
-  收盤價: string;
-  '漲跌(+/-)': string;
-  漲跌價差: string;
-  最後揭示買價: string;
-  最後揭示賣價: string;
-}
 export interface Hearder {
   field: string;
   header: string;
   style: {};
 }
-
-const KEYS = {
-  0: '排名',
-  1: '證券代號',
-  2: '證券名稱',
-  3: '成交股數',
-  4: '成交筆數',
-  5: '開盤價',
-  6: '最高價',
-  7: '最低價',
-  8: '收盤價',
-  9: '漲跌(+/-)',
-  10: '漲跌價差',
-  11: '最後揭示買價',
-  12: '最後揭示賣價',
-};

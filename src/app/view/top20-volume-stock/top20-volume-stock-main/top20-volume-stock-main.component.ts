@@ -8,6 +8,26 @@ import * as moment from 'moment';
 import * as _ from 'lodash';
 import 'moment/locale/zh-tw';
 
+interface StringKey {
+  [key: string]: any;
+}
+
+const ChineseColumn: StringKey = {
+  rank: '排名',
+  companyId: '證券代號',
+  companyName: '證券名稱',
+  transactionShares: '成交股數',
+  transactionAmount: '成交筆數',
+  openingPrice: '開盤價',
+  highestPrice: '最高價',
+  lowestPrice: '最低價',
+  closingPrice: '收盤價',
+  upsDowns: '漲跌(+/-)',
+  priceDifference: '漲跌價差',
+  lastRevealBuyPrice: '最後揭示買價',
+  lastRevealSealPrice: '最後揭示賣價',
+};
+
 @Component({
   selector: 'app-top20-volume-stock-main',
   templateUrl: './top20-volume-stock-main.component.html',
@@ -24,41 +44,29 @@ export class Top20VolumeStockMainComponent implements OnInit {
   ngOnInit(): void {
     moment.locale('zh-tw');
     this.date = moment().format('LL');
-
     this.getTop20VolumeStocks();
   }
 
   getTop20VolumeStocks() {
-    // const date = moment().format('YYYYMMDD');
     this.loading = true;
-    const result: Top20VloumeStockInfo[] = [];
+    const result: any[] = [];
     this.dataSvc.getTop20VolumeStocks().subscribe(
       (resp) => {
-        const keys = ["排名", "證券代號", "證券名稱", "成交股數", "成交筆數", "開盤價", "最高價", "最低價", "收盤價", "漲跌(+/-)", "漲跌價差", "最後揭示買價","最後揭示賣價"];
-
-        resp.payLoad.forEach((d, idx: number) => {
-          const obj = {} as Top20VloumeStockInfo;
-          _.set(obj, keys[0], d.rank);
-          _.set(obj, keys[1], d.companyId);
-          _.set(obj, keys[2], d.companyName);
-          _.set(obj, keys[3], d.transactionShares);
-          _.set(obj, keys[4], d.transactionAmount);
-          _.set(obj, keys[5], d.openingPrice);
-          _.set(obj, keys[6], d.highestPrice);
-          _.set(obj, keys[7], d.lowestPrice);
-          _.set(obj, keys[8], d.closingPrice);
-          _.set(obj, keys[9], d.upsDowns);
-          _.set(obj, keys[10], d.priceDifference);
-          _.set(obj, keys[11], d.lastRevealBuyPrice);
-          _.set(obj, keys[12], d.lastRevealSealPrice);
-        
-          /*d.forEach((value: any, i: number) => {
-            _.set(obj, keys[i], value);
-            result[idx] = obj;
-          });*/
-          result[idx] = obj;
+        resp.payLoad.forEach((data: StringKey) => {
+          if (data.upsDowns === 'up') {
+            data.upsDowns = '+';
+          } else if (data.upsDowns === 'down') {
+            data.upsDowns = '-';
+          }
+          for (const k in data) {
+            const newkey = ChineseColumn[k];
+            data[newkey] = data[k];
+            delete data[k];
+          }
+          result.push(data);
         });
         this.top20VolumeStocks = result;
+        const keys = Object.values(ChineseColumn);
         keys.forEach((k) => {
           this.headers.push({
             field: k,
@@ -73,5 +81,38 @@ export class Top20VolumeStockMainComponent implements OnInit {
         console.log(error);
       }
     );
+  }
+
+  typeOf(value: any) {
+    return typeof value;
+  }
+
+  getColor(val: string) {
+    switch (val) {
+      case '+':
+        return 'red';
+
+      case '-':
+        return 'green';
+
+      default:
+        return 'black';
+    }
+  }
+
+  getFontWeight(val: string) {
+    if (val === '+' || val === '-') {
+      return 'bolder';
+    } else {
+      return 'normal';
+    }
+  }
+
+  getFontSize(val: string) {
+    if (val === '+' || val === '-') {
+      return '20px';
+    } else {
+      return 'small';
+    }
   }
 }

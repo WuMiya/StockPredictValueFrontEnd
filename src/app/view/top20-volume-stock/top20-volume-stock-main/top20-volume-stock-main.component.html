@@ -1,16 +1,17 @@
 <app-site-map-view></app-site-map-view>
-<div class="container-fluid mt-2">
+<div class="container-fluid mt-2 mb-2">
   <h3 style="text-align: center">{{ date }} 成交量前二十名證券</h3>
   <p-table
     [value]="top20VolumeStocks"
     [columns]="headers"
+    [responsive]="true"
     [loading]="loading"
     [scrollable]="true"
     [style]="{
       'min-width': '1392px'
     }"
     scrollHeight="980px"
-    styleClass="p-datatable-sm p-datatable-gridlines"
+    styleClass="p-datatable-sm p-datatable-gridlines p-datatable-striped"
   >
     <ng-template pTemplate="header" let-columns>
       <tr>
@@ -35,7 +36,26 @@
             'text-right': i > 2
           }"
         >
-          <div [innerHtml]="item[col.field]"></div>
+          <span
+            *ngIf="typeOf(item[col.field]) !== 'number'"
+            [ngStyle]="{
+              color: getColor(item[col.field]),
+              'font-weight': getFontWeight(item[col.field]),
+              'font-size': getFontSize(item[col.field])
+            }"
+          >
+            {{ item[col.field] }}
+          </span>
+          <span
+            *ngIf="typeOf(item[col.field]) === 'number'"
+            [ngStyle]="{
+              color: getColor(item[col.field]),
+              'font-weight': getFontWeight(item[col.field]),
+              'font-size': getFontSize(item[col.field])
+            }"
+          >
+            {{ item[col.field] | number: "1.0-2" }}
+          </span>
         </td>
       </tr>
     </ng-template>
