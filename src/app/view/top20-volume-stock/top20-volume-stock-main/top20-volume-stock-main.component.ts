@@ -43,7 +43,6 @@ export class Top20VolumeStockMainComponent implements OnInit {
 
   ngOnInit(): void {
     moment.locale('zh-tw');
-    this.date = moment().format('LL');
     this.getTop20VolumeStocks();
   }
 
@@ -52,12 +51,10 @@ export class Top20VolumeStockMainComponent implements OnInit {
     const result: any[] = [];
     this.dataSvc.getTop20VolumeStocks().subscribe(
       (resp) => {
+        this.date = resp.payLoad.length
+          ? moment(resp.payLoad[0].tDate).format('LL')
+          : moment().format('LL');
         resp.payLoad.forEach((data: StringKey) => {
-          if (data.upsDowns === 'up') {
-            data.upsDowns = '+';
-          } else if (data.upsDowns === 'down') {
-            data.upsDowns = '-';
-          }
           for (const k in data) {
             const newkey = ChineseColumn[k];
             data[newkey] = data[k];
@@ -112,7 +109,7 @@ export class Top20VolumeStockMainComponent implements OnInit {
     if (val === '+' || val === '-') {
       return '20px';
     } else {
-      return 'small';
+      return 'normal';
     }
   }
 }

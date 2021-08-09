@@ -121,6 +121,7 @@ export interface Top20VloumeStockInfo {
   transactionAmount: number;
   transactionShares: number;
   upsDowns: string;
+  tDate: string;
 }
 
 export interface Hearder {
