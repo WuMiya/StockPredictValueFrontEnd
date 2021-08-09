@@ -26,8 +26,17 @@
         </th>
       </tr>
     </ng-template>
-    <ng-template pTemplate="body" let-item let-columns="columns">
-      <tr>
+    <ng-template
+      pTemplate="body"
+      let-item
+      let-columns="columns"
+      let-idx="rowIndex"
+    >
+      <tr
+        [ngStyle]="{
+          'background-color': idx % 2 === 0 ? '#dadada' : 'transparent'
+        }"
+      >
         <td
           *ngFor="let col of columns; let i = index"
           [ngStyle]="col.style"

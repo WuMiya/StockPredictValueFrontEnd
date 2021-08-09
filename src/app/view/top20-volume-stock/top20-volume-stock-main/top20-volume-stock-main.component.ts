@@ -107,7 +107,7 @@ export class Top20VolumeStockMainComponent implements OnInit {
 
   getFontSize(val: string) {
     if (val === '+' || val === '-') {
-      return '20px';
+      return '22px';
     } else {
       return 'normal';
     }
